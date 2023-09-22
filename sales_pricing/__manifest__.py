@@ -21,8 +21,8 @@ Users can access the purchase history for a product.\n
 The module checks purchase history to compute the last purchase price for products.\n
 Users can navigate to the last purchase order related to a product for further details.
 """,
-    'author': "Crevisoft Corporate",
-    'website': "https://www.crevisoft.com",
+    'author': "Nader Sayed",
+    'website': "https://www.linkedin.com/in/nader-sayed-y/",
     'category': 'purchasing/pricing',
     'version': '0.1',
 
