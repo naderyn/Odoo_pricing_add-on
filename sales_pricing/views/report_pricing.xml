@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Create a new actions -->
+
+
+        <record id="action_product_pricing" model="ir.actions.act_window">
+            <field name="name">Product Pricing</field>
+            <field name="res_model">product.pricing</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <!-- Define a new menu item -->
+        <menuitem id="menu_product_pricing" name="Product Pricing" parent="purchase.menu_purchase_products"
+                  sequence="10" action="action_product_pricing" groups="purchase.group_purchase_manager"/>
+
+
+        <!-- Define the tree view for the product pricing model -->
+        <record id="view_product_pricing_tree" model="ir.ui.view">
+            <field name="name">product.pricing.tree</field>
+            <field name="model">product.pricing</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom" delete="0">
+                    <field name="product_id"
+                           options="{'no_open':True,'no_create':True,'no_quick_create': True, 'no_create_edit': True}" attrs="{'readonly':[('id','!=',False)]}"/>
+                    <field name="category_id"
+                           options="{'no_open':True,'no_create':True,'no_quick_create': True, 'no_create_edit': True}"/>
+                    <field name="default_code"/>
+                    <field name="product"/>
+                    <field name="last_purchase_price"/>
+                    <field name="is_purchased" invisible="1"/>
+                    <!--                    <button name="open_last_purchase_order" type="object" icon="fa-external-link"-->
+                    <!--                            attrs="{'invisible':[('is_purchased','=',False)]}"/>-->
+                    <field name="last_po"/>
+
+                    <field name="sale_price_old" force_save="1"/>
+                    <field name="cost"/>
+
+                    <field name="percentage"/>
+                    <field name="new_sale_price"/>
+                    <field name="pricelist_id" widget="many2many_tags"
+                           options="{'no_open':True,'no_create':True,'no_quick_create': True, 'no_create_edit': True}"/>
+                    <button name="set_price" type="object" icon="fa-bullseye" string="Set"  attrs="{'invisible': [('new_sale_price', '&lt;=', 0)]}"/>
+                    <button name="show_price_history" type="object" icon="fa-history" string="History"/>
+                    <button name="unlink" type="object" icon="fa-trash" string="Clear" class="btn-secondary"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <!-- Define the form view for the product pricing model -->
+        <record id="view_product_pricing_form" model="ir.ui.view">
+            <field name="name">product.pricing.form</field>
+            <field name="model">product.pricing</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group >
+                        <field name="default_code"/>
+                        <field name="product"/>
+                        <field name="last_purchase_price"/>
+                        <field name="cost"/>
+                        <field name="sale_price_old"/>
+                        <field name="percentage"/>
+                        <field name="new_sale_price"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- Define the Search and Group by for the product pricing model -->
+        <record id="view_pricing_pricing_search" model="ir.ui.view">
+            <field name="name">pricing.update.search</field>
+            <field name="model">product.pricing</field>
+            <field name="arch" type="xml">
+                <search string="Product Pricing">
+                    <field name="product_id" string="Product"/>
+                    <field name="category_id" string="Category"/>
+                    <field name="default_code" string="Code"/>
+                    <field name="pricelist_id" string="Price List"/>
+                    <!--                    <field name="journal_id"/>-->
+                    <separator/>
+                    <filter string="Price List" name="pricelist" domain="[]" context="{'group_by': 'pricelist_id'}"/>
+                    <filter string="Category" name="category_id" domain="[]" context="{'group_by': 'category_id'}"/>
+
+                </search>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

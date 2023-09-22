@@ -1,0 +1,56 @@
+<odoo>
+    <data>
+        <!-- Define a new view for the Product Price Change Log model -->
+        <record id="view_product_price_change_log_tree" model="ir.ui.view">
+            <field name="name">product.price.change.log.tree</field>
+            <field name="model">product.price.change.log</field>
+            <field name="arch" type="xml">
+                <tree default_order="change_datetime desc">
+                    <!-- Define columns in the list view -->
+                    <field name="change_datetime" string="Change Date"/>
+                    <field name="product_id"/>
+                    <field name="category_id" string="Category"/>
+                    <field name="user_id"/>
+                    <field name="old_price"/>
+                    <field name="new_price"/>
+
+
+
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- Create a new action -->
+        <record id="action_product_price_change" model="ir.actions.act_window">
+            <field name="name">Product Log</field>
+            <field name="res_model">product.price.change.log</field>
+            <field name="view_mode">tree</field>
+            <field name="context">{'create': False}</field>
+        </record>
+        <menuitem id="menu_history_product_pricing" name="Product Pricing History"
+                  parent="purchase.menu_purchase_products"
+                  sequence="11" action="action_product_price_change" groups="purchase.group_purchase_manager"/>
+
+        <!-- Define the Search and Group by for the  pricing history model -->
+        <record id="view_pricing_history_search" model="ir.ui.view">
+            <field name="name">pricing.history.search</field>
+            <field name="model">product.price.change.log</field>
+            <field name="arch" type="xml">
+                <search string="Product Pricing history">
+                    <field name="product_id" string="Product"/>
+                    <field name="user_id" string="User"/>
+                    <!--                    <field name="journal_id"/>-->
+                    <separator/>
+                    <filter string="Change Date" name="change_datetime" domain="[]"
+                            context="{'group_by': 'change_datetime'}"/>
+                    <filter string="User" name="user_id" domain="[]" context="{'group_by': 'user_id'}"/>
+                    <filter string="Product" name="product_id" domain="[]" context="{'group_by': 'product_id'}"/>
+                    <filter string="Category" name="category_id" domain="[]" context="{'group_by': 'category_id'}"/>
+
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

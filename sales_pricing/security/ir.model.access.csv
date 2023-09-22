@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sales_pricing_group_user,sales_pricing.group.user,sales_pricing.model_product_pricing,purchase.group_purchase_user,1,1,1,1
+access_sales_pricing_log_user,sales_pricing.log.user,sales_pricing.model_product_price_change_log,purchase.group_purchase_user,1,1,1,1
+
